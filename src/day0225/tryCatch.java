@@ -15,11 +15,19 @@ public class tryCatch {
 //        可能程序在接下来的代码会出现异常
         try {
             double value = 3 / 0;
-        } catch (Exception e) {
+//            异常匹配尽量先子类在父类
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.err.println("数组越界");
             e.printStackTrace();
 //            无论异常都会执行
+        } catch (ArithmeticException e) {
+            System.err.println("算术错误");
+            e.printStackTrace();
         } finally {
+//            唯一不执行的时候      跳出Java虚拟机system.exit(int status)
             System.out.println("程序执行结束");
         }
+
+        //可以使用log4j将日志文件保存到文件
     }
 }
