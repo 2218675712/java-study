@@ -47,6 +47,7 @@ public class test03 {
             String msg = "hello world";
             byte[] datas = msg.getBytes();
             os.write(datas, 0, datas.length);
+            os.flush();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
