@@ -27,9 +27,9 @@ public class test11 {
         byte[] datas = null;
         try {
             InputStream is = new FileInputStream("src/day0303/img/壁纸.jpg");
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            copy(is, baos);
-            datas = baos.toByteArray();
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            copy(is, os);
+            datas = os.toByteArray();
             System.out.println(datas.length);
 
         } catch (FileNotFoundException e) {
@@ -45,7 +45,6 @@ public class test11 {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        close();
     }
 
     /**
@@ -66,17 +65,24 @@ public class test11 {
             os.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            close(is, os);
         }
     }
+
     /**
      * 释放资源
      *
      * @param ios
      */
-    public static void close(Cloneable... ios) {
-        for (Cloneable io : ios) {
-            if (null != io) {
-                ios.clone();
+    public static void close(Closeable... ios) {
+        for (Closeable io : ios) {
+            try {
+                if (null != io) {
+                    io.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
