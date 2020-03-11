@@ -1,3 +1,11 @@
+/*
+ * 时间:       2020年3月11日15:19:21
+ * 目的:       学习jdbc
+ * 结果:
+ *       ----------------------------------
+ *          创建模板
+ *       ----------------------------------
+ * */
 package day0310.jdbc;
 
 
@@ -26,6 +34,7 @@ public class test01 {
             //创建数据库操作statement
             statement = conn.createStatement();
             System.out.println("数据库连接成功");
+//            使用stringbuffer防止多线程问题
             StringBuffer strB = new StringBuffer();
             strB.append("INSERT INTO student values(5,'张三',20)");
             int num = statement.executeUpdate(strB.toString()); //增，删，改用executeUpdate
