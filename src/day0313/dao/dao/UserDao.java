@@ -7,7 +7,7 @@ public interface UserDao {
 
     int addUser(String username, String pwd, String nickname);
 
-    int updataPw(int id, String password);
+    int updataPw(int id, String pwd);
 
     int deleteUser(int id);
 }

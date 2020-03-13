@@ -9,8 +9,7 @@ import java.sql.SQLException;
 
 import static day0310.jdbc.jdbc.conn;
 
-public class UserDaoImpl implements UserDao {
-
+public class UserDaoImpl extends BaseDao implements UserDao {
     @Override
     public User login(String username, String pwd) {
         Connection conn = null;
@@ -19,11 +18,11 @@ public class UserDaoImpl implements UserDao {
         ResultSet rs = null;
         try {
             conn = conn();
-            String sql = "SELECT * FROM my_user t WHERE t.username=? and t.password=?";
+            String sql = "SELECT * FROM student WHERE username=? and pwd=?";
             pstm = conn.prepareStatement(sql);
             pstm.setString(1, username);
             pstm.setString(2, pwd);
-            pstm.executeQuery();
+            rs = pstm.executeQuery();
             if (rs.next()) {
                 user = new User();
                 user.setId(rs.getInt("id"));
@@ -48,16 +47,81 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int addUser(String username, String pwd, String nickname) {
-        return 0;
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        int num = 0;
+        try {
+            conn = conn();
+            String sql = "insert into student values (?,?,?,?)";
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, 0);
+            pstm.setString(2, username);
+            pstm.setString(3, pwd);
+            pstm.setString(4, nickname);
+            num = pstm.executeUpdate();
+            System.out.println("受影响的行" + num);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                pstm.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return num;
     }
 
     @Override
-    public int updataPw(int id, String password) {
-        return 0;
+    public int updataPw(int id, String pwd) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        int num = 0;
+        try {
+            conn = conn();
+            String sql = " UPDATE student SET pwd=? WHERE id=?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, pwd);
+            pstm.setInt(2, id);
+            num = pstm.executeUpdate();
+            System.out.println("受影响的行" + num);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                pstm.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return num;
     }
 
     @Override
     public int deleteUser(int id) {
-        return 0;
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        int num = 0;
+        try {
+            conn = conn();
+            String sql = " DELETE FROM student WHERE id=?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            num = pstm.executeUpdate();
+            System.out.println("受影响的行" + num);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                pstm.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return num;
     }
 }
