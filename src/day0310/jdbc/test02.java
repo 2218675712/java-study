@@ -32,6 +32,7 @@ public class test02 {
             String sql = "INSERT INTO student VALUES(?,?,?)";
 //            创建psvm
             pstm = conn.prepareStatement(sql);
+            //填充占位符
             pstm.setInt(1, id);
             pstm.setString(2, username);
             pstm.setInt(3, age);
