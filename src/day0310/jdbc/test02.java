@@ -8,7 +8,6 @@
  * */
 package day0310.jdbc;
 
-
 import java.sql.*;
 
 public class test02 {
